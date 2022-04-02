@@ -1,0 +1,62 @@
+%========================================================================
+%
+% Important note:
+% Chapter heading images should have a 2:1 width:height ratio,
+% e.g. 920px width and 460px height.
+%
+% Based on the the Legrand Orange Book Template 
+% (http://www.latextemplates.com/template/the-legrand-orange-book)
+% by Mathias Legrand (legrand.mathias@gmail.com)
+%
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%========================================================================
+ 
+
+%...........................................................................
+% Add the Structure File
+%...........................................................................
+
+% Insert the structure.tex file which contains the entire structure behind the document (packages, colors, commands, all the things that make it pretty)
+
+\input{structure} 
+
+%...........................................................................
+% Create the document
+%...........................................................................
+
+% create the actual document and insert the sub-files. Sub-files make it a lot easier to edit, rearrange, and keep track of each chapter instead of having one huge file.
+
+\begin{document}
+
+\title{Doctoral Thesis}
+\author{Name}
+\date{January, 2022}
+
+\subfile{Sections/Cover}
+
+%................... Main Chapters .........................................
+
+\subfile{Chapters/General_Intro/General_intro}
+
+\subfile{Chapters/Paper1/Paper1}
+%\subfile{Chapters/Paper4/Paper4}
+
+%\subfile{Chapters/Paper2/Paper2}
+%\subfile{Chapters/Paper3/Paper3}
+
+\subfile{Chapters/General_Disc/General_Discussion}
+
+%................... Appendices ............................................
+
+\appendix
+
+\subfile{Sections/General_Summary}
+%\subfile{Sections/General_Summary_NL}
+%\subfile{Sections/Impact_Paragraph}
+%\subfile{Sections/Acknowledgements}
+%\subfile{Sections/CV}
+
+\subfile{Sections/Back_cover}
+
+
+\end{document}

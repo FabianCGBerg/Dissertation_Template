@@ -1,0 +1,359 @@
+
+==================================================================
+To add a chapter:
+==================================================================
+
+go to: Papers
+Select one of the Paper subfolders or add a new one
+Inside each folder is:
+- an "Images" folder for the images that belong to that paper/chapter
+- The .Tex file for the paper/chapter
+- The .Bib file for the references of that paper/chapter
+
+Each .Tex file starts with a few things:
+
+- \title{TitleOfChapter} %Title of the chapter
+- \chapterimage{Papers/Headers/ChapterHeader.pdf} % Chapter image
+- \chapter{TitleOfChapter} % Title that shows up in table of content and above each page of the chapter
+
+We edit these to reflect the current chapter and the chapter header (the image for the header is put in the Headers folder rather than the current chapters' Image folder to make changing the styles easier). The ChapterTemplate folder includes all elements with examples.
+
+
+You can add your writing in as paragraphs, so just a block of text. Note that starting on a new line (indicated by the line numbers to the left) doesn't result in LaTeX starting a new line, it'll just be added after the previous text. Starting new line can be done in two ways:
+- The \\ command (literally two backslashes) will tell LaTeX to start that sentence on a new line
+- Leaving one blank line will tell LaTeX it's a new paragraph and will also indent the first line.
+- Want to start a new paragraph but don't want it to indent? use the command: \noindent at the beginning of the sentence.
+- To start on a new page simply use the \newpage command
+
+
+To add the chapter to the main document, go to main.tex which only contains the chapters of the whole document. Add the new chapter by adding a new Subfile:
+
+\subfile{Papers/NewChapter/NewChapter} %The .tex extensions isn't necessary 
+
+the document will compile in the order you've specified
+
+-----------------------
+EMPTY PAGES
+-----------------------
+The template is a book template by default (as specified in the structure file)
+This means it will automatically start each chapter on the right-side, adding in
+empty pages to make sure that happens. starting on the right looks better in print,
+but the empty pages might distract in the digital version. To turn that off:
+
+go to the structure file and edit the top line
+\documentclass{book} 
+
+add the parameter "openany" to tell LaTeX it can start chapters on any page
+
+\documentclass[openany]{book} 
+
+-----------------------
+CHAPTER/SECTION MARKS
+-----------------------
+sometimes your titles are a bit long, and they take up too much space in the header.
+There's a solution for that! all we need to do is specify a separate chapter and/or section mark
+
+chapters and sections are defined as such:
+
+    \section{A Short Main Title: A longer and more detailed subtitles that doesn't fit}
+
+when we compile this the header is gonna have a long ass title in it that isn't pretty.
+To remedy this we specific the \sectionmark as such:
+
+    \sectionmark{A Short Main Title}
+
+I used the main title, but you could do anything you'd like. The same works for chapters by
+using the \chaptermark command. 
+
+My advice is to slap it on behind the section command like so:
+    \section{A Short Main Title: A longer and more detailed subtitles that doesn't fit}\sectionmark{A Short Main Title}
+
+-----------------------
+CHAPTER/SECTION LABELS
+-----------------------
+In longer texts you might want to refer to sections and chapters, similar to how you would
+cross-reference figures and tables. For figures and tables we can use the \label command, 
+and for chapters, sections, and subsections this is exactly the same
+
+after defining your section title, add the following command and the pdf will automatically
+create a link to that page.
+\label{intro:Sec2_description}
+
+to refer to a certain section within your text you can use the \ref command, but note that the
+label will be the number of the chapter/section (such as 1.2) so remember to specific that before the command:
+    
+    this is an example sentence for the command (see section \ref{intro:Sec2_description})
+
+-----------------------
+APPENDICES
+-----------------------
+Usually when we add an appendix these are not numbered but instead use A, B, C
+to get this to work just add the command \appendix inn your main.tex file at the 
+point of the document where the appendices begin
+
+I am assuming that you put the appendix at the end of the book though. It would
+look a bit like this:
+
+\subfile{Sections/Cover}
+\subfile{Chapters/Paper1/Paper1_Title}
+\subfile{Chapters/Paper2/Paper2_Title}
+\appendix
+\subfile{Chapters/AppendixA/AppendixA_title}
+
+in the AppendixA_title.tex file nothing changes and you can still start the document
+with the \chapter command. However, in the section headers the "chapter" is now "appendix"
+and it is no longer numbered but uses A, B, C instead
+
+I also turned off the section numbering since I only had a single section and A.1 looked weird
+to turn this back on go to the structure file, find the "CHAPTER HEADINGS" section and at the end you will see:
+
+    \appto\appendix{%
+    \renewcommand{\thepart}{\Alph{part}}% A,B,C
+    \renewcommand{\theHpart}{\Alph{part}}% for hyperref
+    \renewcommand\chaptername{Appendix} % Changes the header to say "Appendix"
+    \renewcommand\thesection{\Alph{chapter}} % Resets the sections so it says A instead of A.1.
+    \setcounter{part}{0}} %to restart with A
+
+comment out the second to last line that resets the sections to get the numbering back.
+I used a bit of a cheaty method to get it to work, making it use the chapter number for
+the section, but it works nonetheless.
+
+Additionally you can use \Arabic or \Roman numerals for the appendix instead of \Alph
+(and you can use small letters instead of capital letters bu using \arabic, \roman, and \alph)
+
+-----------------------
+CHAPTER THUMB LABELS
+-----------------------
+to get the chapter numbers to show up on the side of the page all you need to do is 
+add the \AddLabels command at the start of the chapter like so:
+
+    \chapter{Chapter Title}
+    \AddLabels
+
+the thumb labels will automatically switch sides based on odd or even pages (so it 
+should always be printed on outer margin of the pages when printed). It will also
+automatically shift down with each chapter based on the chapter number and the size 
+of the label. This now also works with appendices.
+
+To change the look of the labels, go to the structure file at line 680. 
+That's the chapter label section. Here you can change the label size, color, and font
+
+I prefer not to have the labels in the reference sections, so I turn them off before
+I output the reference list by using the \RemoveLabels command, like so:
+
+    \section{References}\index{References}
+    \RemoveLabels
+    \printbibliography[heading=none]
+
+==================================================================
+References
+==================================================================
+
+The references (the .bib file) also needs to be added to the project, which is easier than you might think:
+
+- You will need a .bib file. This can be exported from Zotero or Mendeley, but you can also use this website (https://rintze.zelle.me/ref-extractor/) to extract Zotero/Mendeley citations from a word file.
+
+- once the .bib file is placed in the correct folder (you can change this if you want, I just find this setup the easiest), add a reference to that .bib into the Structure.tex file.
+
+- The third section "Bibliography packages" contains the references to .bib files. To add a new .bib file that can be used in any .Tex file add the following line:
+
+- \addbibresource{Papers/Paper2/Paper2Bib.bib} % Paper 2 BibTeX file
+
+- Make sure the path is correct otherwise it'll throw a fit
+
+To reference an article in text use these commands:
+- \cite{Reference} for a regular reference (e.g. Author, G. 2019)
+- Note this is without the parenthesis () on purpose to allow for within parenthesis citations such as: (see reviews; Author, G. 2019)
+- So make sure to add the parentheses like so: (\cite{Reference})
+- In order to do all the above without the author name, just the year, use the \cite*{Reference} command. Same things apply
+- If you want to add the parentheses automatically, use \parencite{Reference} or \parencite*{Reference}
+- With the reference coloring, the parencite will color the whole thing. Personally I prefer black parentheses when reading with grey references to easily skip them.
+- If you don't want the references colored, or want a different color, the easiest thing is to change the color command in the structure.tex file under "font settings" to whatever RGB color you want (or black): \definecolor{ReferenceGrey}{RGB}{130, 130, 130} 
+
+You will also see a command at the beginning and end of the document:
+    \begin{refsection}
+    \end{refsection}
+
+This encapsulates the chapter references. I did this so each chapter will have its own reference list rather than one long list for the entire book. If you want one reference list at the end, simply remove these commands and only have a single \printbibliography[heading=none] command at the end (maybe even make a separate .tex file for it and add it as a subfile.
+
+To print of the reference section add the command 
+
+    \printbibliography[heading=subbibliography]
+
+at the point you want to add the references (usually at the end). This will print out the references in APA style including a header stating "References". If you want to use your own header change heading to "none".
+
+    \printbibliography[heading=none]
+
+==================================================================
+Adding statistical Results:
+==================================================================
+
+to add statistical results I made some custom commands that ensure the style is always the same (APA or whatever you like). The command sets the style and every instance will automatically update if you change something. 
+- Values will automatically be rounded to 2 or 3 decimals. APA states that most values will have two decimals (F, T, Z) except for things like p-values which have three. 
+- Leading zeros will be removed where necessary. APA states that leading zeros should be removed for values that cannot exceed 1 (so P-values, correlations, etc).
+
+Why did I do this? consistency mostly. This means all results look the same, have the same information (no human error where you forget to add a number or a parenthesis or even a space between the p and = sign).
+
+To reference results you can use the following commands:
+
+- For an F-Test
+   - \Ftest[DF][DF_Error][F-Value][P-Value]
+   - Example: \Ftest[1][28.86][79.50][.0001]
+ - To use brackets instead of parenthesis use the SQ variant
+   - \FtestSQ[DF][DF_Error][F-Value][P-Value]
+
+- For a T-Test
+   - \Ttest[DF][T-Comparison][T-Value][P-Value]
+   - Example: \Ttest[34][Girls-Boys][6.346][.235]
+ - To use brackets instead of parenthesis use the SQ variant
+   - \TtestSQ[DF][DF_Error][F-Value][P-Value]
+
+- For a Mean Difference with a T-Test (note: this uses the T-Test command and simply puts the Mean Difference in front of it)
+   - \MDiff[Difference][Value_Type][T-DF][T-Comparison][T-Value][P-Value]
+   - Example: \MDiff[34.23][ms][73][Girls-Boys][4.21][.024]
+ - To use brackets instead of parenthesis use the SQ variant
+   - \MDiffSQ[Difference][Value_Type][T-DF][T-Comparison][T-Value][P-Value]
+
+- For a Chi-Square Test
+   - \ChiTest[DF][Chi_Value][P-Value]
+   - Example: \ChiTest[1][23][.024]
+
+- For a Wilcoxon Rank Test
+   - \WilxRank[Z-Value][P-Value][DF][r-Value]
+   - Example: \ChiTest[4.562][.0935][56][0.123]
+ - To use brackets instead of parenthesis use the SQ variant
+   - \WilxRankSQ[Z-Value][P-Value][DF][r-Value]
+
+- For a Correlation
+   - \CorTest[DF][r-Value][P-Value]
+   - Example: \CorTest[31][0.345][0.0001]
+ - To use brackets instead of parenthesis use the SQ variant
+   - \CorTestSQ[DF][r-Value][P-Value]
+ - For partial correlations add a P to the command
+   - \CorTestP[DF][r-Value][P-Value]
+   - \CorTestPSQ[DF][r-Value][P-Value]
+
+
+==================================================================
+Adding figures
+==================================================================
+
+Figures in LaTeX can be tricky and will require a lot of finagling to get it to work the way you want. The basic setup for figures as shown below: 
+
+\begin{figure}[!ht]
+\includegraphics[width=1\textwidth]{FigureExample.pdf}
+\caption{This is the caption of the figure, will show up below the image}
+\label{fig:NameOfFigure1}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\caption{This caption will show up above the image}
+\label{fig:NameOfFigure2}
+\includegraphics[width=1\textwidth]{FigureExample.pdf}
+\end{figure}
+
+Figures will have the figure itself inside the \includegraphics[width=1\textwidth]{FigureExample.pdf} command. 
+
+Make sure to include the entire path of the figure here. The width can be adjusted as well, which by default I have set to the width of the text. To change this it's best to scale the image based on text width (otherwise you might fly off the page). To do this change the "1" to whatever scale you desire, such as 90% (0.9), 110% (1.1) or even smaller changes such as 86% (0.86).
+
+\includegraphics[width=0.86\textwidth]{FigureExample.pdf} 
+
+You might also notice that the figure I've included in the command is actually a PDF. PDF's are the easiest way to include the highest resolution images (since PDFs are vector images). My go-to method is to create Figures/Graphs in PowerPoint in the correct format (doesn't have to be A4) and then export to PDF. Other programs (such as Matlab, R, or Python) can also export as PDF. Other vector formats work too (such as SVG) and of course regular images (such as PNG). But I recommend the PowerPoint to PDF method for the fastest result.
+
+The other two commands are pretty straight-forward:
+
+\caption{This caption will show up above the image}
+\label{fig:NameOfFigure2}
+
+Caption is whatever shows up above or below the image. It is possible to get it on the side, but that requires a lot more tricks using mini-pages that I avoided.
+
+\Label is used to refer to the Figure in text. Instead of actually writing down "See Figure 2" we can use dynamic references by typing "See Figure \ref{fig:NameOfFigure2}" which will output the same text. Why do it like this? Well if we decide to include another image between figure 1 and 2, suddenly everything shifts. By using the ref command it simply updates it to "See Figure 3" and we don't have to go through the whole thing to update figure numbers.
+
+        Note: the \Label{} command has to be after the \caption{} command. It is entirely possible to refer to a figure that comes after the text (e.g., have a "see figure 1" and then have the figure below that paragraph). You might see  LaTeX render the reference as "Figure ??". That's because it needs at least 2 compiles to properly reference (one to find all the references, then a second to connect them).
+
+Lastly, you might also notice that figures don't always appear at the location you put the in. LaTeX floats images, meaning it finds a place to put the image and that could be the next page. It will then fill up the space with text. The text that's supposed to come after the image can appear before the image, to fill that space, and that doesn't always look good. But we have a solution for that. The PlaceIns package is included in this template, and with it FloatBarriers.
+
+by using \FloatBarrier you prevent anything from floating beyond that point. I use them a lot before/after images to prevent them from being placed at the wrong location. by using a \FloatBarrier I tell LaTeX that nothing in my document can be placed before that image, forcing the image to be in a specific location.
+
+
+==================================================================
+Change the Theme Color
+==================================================================
+
+In the Structure.tex file is a section called ""Color definitions".
+
+The one to change is called "ThemeColor" and it's best to not change the name (since it's used a lot in the structure file). Instead change the RGB colors to whatever you want (Google has a nice colorpicker if you don't know the RGB value, and I am a BIG fan of the site coolors.co).
+
+I've already added a couple of options. Make sure to only have one and comment out the other ones (computer gets confused otherwise).
+
+%\definecolor{ThemeColor}{RGB}{243,102,25} % Original Ocre (orange) color
+%\definecolor{ThemeColor}{RGB}{52,177,201} % Blue variant
+%\definecolor{ThemeColor}{RGB}{177, 201, 52} % Green variant
+\definecolor{ThemeColor}{RGB}{53, 116, 130} % Different Blue shade
+
+if you prefer the Hexadecimal definition of colors, you can use the XColor built in HTML color function.
+replacing the commands as such
+
+%\definecolor{ThemeColor}{HTML}{237482}
+
+it will accomplish the same, though slight variations might occur since it depends on Xcolor. I prefer the RGB colors, but to each their own.
+
+
+other ways of defining color exist too
+
+\definecolor{pink1}{rgb}{0.858, 0.188, 0.478}
+- uses RBG values but from 0-1 instead of 0-255 (why?)
+
+\definecolor{pink2}{cmyk}{0, 0.7808, 0.4429, 0.1412} 
+- uses CMYK colors more common in printing and will look a little by different from RGB colors
+
+\definecolor{mygray}{gray}{0.6}
+- simple gray-scale with the number showing how gray it is (0-1)  
+
+
+
+==================================================================
+Using Symbols and Formulas in LaTeX
+==================================================================
+
+In science we use symbols A LOT, and of course there's a package to make it look nice.
+But we can avoid using math mode by using the \SI command as shown below
+
+\SI{50}{\micro\second}.
+
+this will output 50 microseconds using the mu symbol.
+
+
+-----Formulas-----
+
+One of the strengths of LaTeX is how amazing formulas look, and using them is not that hard. You will need to be in math-mode for formulas to look right.
+
+For single symbols it's easiest to use $x$ which puts everything within the two dollar signs in math mode.
+
+For equations it's better to define a block using 
+
+\( ... \)  for in-line equations
+\[ ... \]  for equation on their own line
+
+-----------------------
+Common functions
+-----------------------
+some functions are used more than others, at least by me. The ones I used more are
+
+\sum_{bottom}^{top}     | for that big sum symbol
+\frac{top}{bottom}      | for factions
+\quad and \qquad        | adds a space or double space in your equation
+
+by default formulas are centered, if you want to have them aligned left, go to the Structure.tex file and add the "fleqn" parameter to the \documentclass{book}, as such
+
+\documentclass[fleqn]{book} 
+
+you might also want to add the "leqno" parameter to label formulas to the left as well
+
+\documentclass[fleqn, leqno]{book} 
+
+
+\vspace{} is one of your best friends! this will allow you to move things up or down slightly to make things fit. You can use vspace with different measurements such at pt, cm, mm, or em. But likely pt or cm will be easiest to use.
+
+Adding in \vspace{-1cm} will decrease the vertical space at this point by 1cm, while \vspace{1cm} will increase the vertical space

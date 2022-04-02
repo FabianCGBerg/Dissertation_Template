@@ -1,0 +1,768 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is based on the Legrand Orange Book
+% Structural Definitions File
+%
+% The original template (the Legrand Orange Book Template) can be found here --> http://www.latextemplates.com/template/the-legrand-orange-book
+%
+% Original author of the Legrand Orange Book Template::
+% Mathias Legrand (legrand.mathias@gmail.com) with modifications by:
+% Vel (vel@latextemplates.com)
+%
+% Original License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ %----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[]{book} 
+\renewcommand{\baselinestretch}{1.3}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\raggedbottom
+\setlength{\headheight}{24pt}
+
+\usepackage{geometry} % Page margins
+\usepackage[export]{adjustbox}
+
+
+% This papersize (170x240) is the B5 format used for Dutch dissertations. % I have no idea why it's different from the regular, but it is.
+\geometry{
+    paperheight=240mm,
+    paperwidth=170mm,
+    inner=25mm,         % Inner margin
+    outer=20mm,         % Outer margin
+    top=25mm,           % Top margin
+    bottom=20mm,        % Bottom margin
+    %showframe,         % show how the type block is set on the page
+}
+
+% This version adds 2mm around the page, the relative position of 
+% everything will be the same, it just adds the cutting margin for 
+% printing.
+
+%\geometry{
+%    paperheight=244mm,
+%    paperwidth=174mm,
+%    inner=27mm,         % Inner margin
+%    outer=22mm,         % Outer margin
+%    top=27mm,           % Top margin
+%    bottom=22mm,        % Bottom margin
+%}
+
+%...........................................................................
+% Font Settings
+%...........................................................................
+
+\usepackage{avant} % Use the Avantgarde font for headings
+%\usepackage{times} % Use the Times font for headings
+\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Sym­bol, Chancery and Com­puter Modern fonts
+
+% ======== Font used for the main text ========
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+%\usepackage{tgbonum}
+
+% ============================================= 
+
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+
+\usepackage{setspace} % For line spacing
+
+\usepackage{xcolor}
+\usepackage{longtable}
+
+% ============================================= 
+
+%==========================================================================
+% Color definitions
+%==========================================================================
+
+\usepackage{xcolor} % Required for specifying colors by name
+
+% ThemeColor is the themecolor, change the color by changing the RGB values here but keep it as 'ThemeColor'. That way you don't have to change it in the entire document
+
+%\definecolor{ThemeColor}{RGB}{243,102,25} % Original Ocre (orange) color
+%\definecolor{ThemeColor}{RGB}{52,177,201} % Blue variant
+%\definecolor{ThemeColor}{RGB}{177, 201, 52} % Green variant
+\definecolor{ThemeColor}{RGB}{53, 116, 130} % Different Blue shade
+
+
+%Off-black and off-white make it easier on the eyes (less contrast)
+\definecolor{offBlack}{RGB}{38, 38, 38} % Really dark-grey
+\definecolor{offWhite}{RGB}{230, 230, 230} % really light-grey
+
+\definecolor{Brandy}{RGB}{148, 54, 53}
+\definecolor{TealBlue}{RGB}{49, 132, 155}
+\definecolor{CyberGrape}{RGB}{95, 73, 122}
+\definecolor{OliveGreen}{RGB}{119, 147, 60}
+\definecolor{ReferenceGrey}{RGB}{130, 130, 130}
+
+\newcommand{\FontRed}[1]{\textcolor{Brandy}{\textbf{#1}}}
+\newcommand{\FontBlue}[1]{\textcolor{TealBlue}{\textbf{#1}}}
+\newcommand{\FontPurple}[1]{\textcolor{CyberGrape}{\textbf{#1}}}
+\newcommand{\FontGreen}[1]{\textcolor{OliveGreen}{\textbf{#1}}}
+
+%...........................................................................
+% Bibliography packages
+%...........................................................................
+\usepackage{textcomp}
+\usepackage{gensymb}
+
+% Bibliography
+\usepackage{csquotes}
+\usepackage[style=apa,sorting=nyt,sortcites=true,autopunct=true,autolang=hyphen,hyperref=true,abbreviate=false,backref=true,backend=biber]{biblatex}
+
+\usepackage[colorlinks=true,linkcolor=blue, citecolor=blue]{hyperref}%
+
+% Here we add the references. It is also possible to just add one file
+% it will combine them all anyway, but you might prefer to keep them 
+% separate 
+\addbibresource{Chapters/General_Intro/General_Intro.bib} % General Intro BibTeX file
+\addbibresource{Chapters/Paper1/Paper1Bib.bib} % Paper 1 BibTeX file
+\addbibresource{Chapters/Paper2/Paper2Bib.bib} % Paper 2 BibTeX file
+\addbibresource{Chapters/Paper3/Paper3Bib.bib} % Paper 3 BibTeX file
+\addbibresource{Chapters/Paper4/Paper4Bib.bib} % Paper 4 BibTeX file
+\addbibresource{Chapters/General_Disc/General_Discussion.bib} % General Discussion BibTeX file
+
+\addbibresource{Chapters/ChapterTemplate/ChapterTemplateBib.bib} % Paper 1 BibTeX file
+
+\defbibheading{bibempty}{}
+
+
+% This section changes the colors of the references, I made the grey using the color I defined above
+% It does so for the regular citation and the year-only citation
+% If you don't want them to be colored, you can comment out the section below, or even easier, set the
+% color above to {ReferenceGrey}{RGB}{0,0,0}
+
+\newcommand{\mkbibparenscol}[1]{\textcolor{ReferenceGrey}{\mkbibparens{#1}}}
+
+\DeclareCiteCommand{\cite}[\textcolor{ReferenceGrey}]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\cite*}[\textcolor{ReferenceGrey}]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citeyear}}
+  {}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\parencite}[\mkbibparenscol]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {}
+  {\usebibmacro{postnote}}
+
+
+\DeclareCiteCommand{\parencite*}[\mkbibparenscol]
+  {\usebibmacro{cite:init}%
+   \usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{citeyear}}
+  {}
+  {\usebibmacro{postnote}}
+
+
+%----------------------------------------------------------------------------------------
+%	VARIOUS REQUIRED PACKAGES
+%----------------------------------------------------------------------------------------
+
+\usepackage{titlesec} % Allows customization of titles
+
+\usepackage{graphicx} % Required for including pictures
+
+\usepackage{pdfpages}
+
+%For tables
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{longtable}
+
+\graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+
+\usepackage{lipsum} % Inserts dummy text
+
+\usepackage{tikz} % Required for drawing custom shapes
+
+\usepackage[english]{babel} % English language/hyphenation
+
+\usepackage{enumitem} % Customize lists
+\setlist{nolistsep} % Reduce spacing between bullet points and numbered lists
+
+\usepackage{booktabs} % Required for nicer horizontal rules in tables
+
+\usepackage{eso-pic} % Required for specifying an image background in the title page
+
+\usepackage{subfiles} % allows for the use of different TeX files per chapter
+\usepackage{placeins} % needed for float barriers
+
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+
+\usepackage{xstring}
+
+
+
+%----------------------------------------------------------------------------------------
+%	Shortcuts and Custom Commands
+%----------------------------------------------------------------------------------------
+
+
+
+%==========================================================================
+% Formatting commands
+%==========================================================================
+\def\SPSB#1#2{\rlap{\textsuperscript{{#1}}}\SB{#2}}
+\def\SP#1{\textsuperscript{{#1}}}
+\def\SB#1{\textsubscript{{#1}}}
+
+
+\usepackage{siunitx}
+
+\newcommand*{\roundNum}[2][2]{\num[output-decimal-marker={.},
+                             add-integer-zero=false,
+                             round-mode=places,
+                             round-precision={#1},
+                             group-digits=false]{#2}}
+
+\def\stripzero#1{\expandafter\stripzerohelp#1}
+\def\stripzerohelp#1{\ifx 0#1\expandafter\stripzerohelp\else#1\fi}
+
+%Short function to check the p-value, changes it to <.001 if smaller than .001
+\newcommand{\checknum}[1]{%
+  \ifdimless{#1pt}{.001pt}{< .001}{= \roundNum[3]{\stripzero{#1}}}%
+}
+
+%==========================================================================
+% Stat results commands
+% Where applicable they come in regular and Square (SQ) bracket versions
+
+% By default it will round numbers to two digits (or less if no more are specified), p-values are rounded to three.
+
+% Leading zeros are not added, but also not removed. 
+% Values with a -1 to 1 range (p-values or correlations) need to be added without leading zeros (such as .005 and not 0.500)
+% Values with larger ranges (F-values or T-values) do require leading zeros and will need to be inserted with them (such as 0.005 and not .500)
+
+%==========================================================================
+
+
+%...........................................................................
+% Example:
+% Main effect A was significant (\FtestSQ[1][20][8.80][.008]), as well as Main effect B: \Ftest[1][15][24.65][.000021].
+
+% Output:
+% Main effect A was significant (F[1,20] = 8.80, p = .008), as well as Main effect B: F(1,15) = 24.65, p < .001. 
+
+%...........................................................................
+
+
+
+% F-test results
+\def\Ftest[#1][#2][#3][#4]{\textit{F}(\roundNum{#1},\roundNum{#2}) = \roundNum{#3}, \textit{p} \checknum{#4}}
+
+\def\FtestSQ[#1][#2][#3][#4]{\textit{F}[\roundNum{#1},\roundNum{#2}] = \roundNum{#3}, \textit{p} \checknum{#4}}
+
+% T-test results
+\def\Ttest[#1][#2][#3][#4]{\textit{t}(\roundNum{#1})\SB{{#2}} = \roundNum{#3}, \textit{p} \checknum{#4}}
+\def\TtestSQ[#1][#2][#3][#4]{\textit{t}[\roundNum{#1}]\SB{{#2}} = \roundNum{#3}, \textit{p} \checknum{#4}}
+
+% Mean Difference with T-Test
+% #1 = Difference | #2 = type of value | #3 = DF | #4 = Difference Subscript | #5 = T-Value | #6 = P-value 
+
+\def\MDiff[#1][#2][#3][#4][#5][#6]{M\SB{Diff} = \roundNum{#1}{#2}; \Ttest[#3][#4][#5][#6]}
+
+\def\MDiffSQ[#1][#2][#3][#4][#5][#6]{M\SB{Diff} = \roundNum{#1}{#2}; \TtestSQ[#3][#4][#5][#6]}
+
+
+% Chi-square results
+\def\ChiTest[#1][#2][#3]{$\chi_{\roundNum{#1}}^2$ = \roundNum{#2}, \textit{p} \checknum{#3}}
+
+% Wilcoxon Rank test Results
+\def\WilxRank[#1][#2][#3][#4]{Z = \roundNum{#1}, \textit{p} \checknum{#2}, r(\roundNum{#3}) = \roundNum{\stripzero{#4}}}
+\def\WilxRankSQ[#1][#2][#3][#4]{Z = \roundNum{#1}, \textit{p} \checknum{#2}, r[\roundNum{#3}] = \roundNum{\stripzero{#4}}}
+
+% Correlation Results
+\def\CorTest[#1][#2][#3]{\textit{r}(\roundNum{\stripzero{#1}}) = \roundNum{#2}, \textit{p} \checknum{#3}}
+\def\CorTestSQ[#1][#2][#3]{\textit{r}[\roundNum{\stripzero{#1}}] = \roundNum{#2}, \textit{p} \checknum{#3}}
+
+\def\CorTestP[#1][#2][#3]{\textit{r}\SB{\textit{partial}}(\roundNum{\stripzero{#1}}) = \roundNum{#2}, \textit{p} \checknum{#3}}
+\def\CorTestPSQ[#1][#2][#3]{\textit{r}\SB{\textit{partial}}[\roundNum{\stripzero{#1}}] = \roundNum{#2}, \textit{p} \checknum{#3}}
+
+%----------------------------------------------------------------------------------------
+%	MAIN TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{titletoc} % Required for manipulating the table of contents
+
+\contentsmargin{0cm} % Removes the default margin
+% Chapter text styling
+\titlecontents{chapter}[0.25cm] % Indentation
+{\addvspace{1pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+{\color{ThemeColor!80}\contentslabel[\Large\thecontentslabel]{1cm}\color{offBlack}} % Chapter number
+{}  
+{\color{offBlack!60}\normalsize\sffamily\bfseries\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+% Section text styling
+\titlecontents{section}[1cm] % Indentation
+{\addvspace{5pt}\sffamily\bfseries} % Spacing and font options for sections
+{\contentslabel[\thecontentslabel]{1cm}} % Section number
+{}
+{\sffamily\hfill\color{black}\thecontentspage} % Page number
+[]
+% Subsection text styling
+\titlecontents{subsection}[1cm] % Indentation
+{\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
+{\contentslabel[\thecontentslabel]{1cm}} % Subsection number
+{}
+{\sffamily\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+[] 
+
+%----------------------------------------------------------------------------------------
+%	MINI TABLE OF CONTENTS IN CHAPTER HEADS
+%----------------------------------------------------------------------------------------
+
+% Section text styling
+\titlecontents{lsection}[0em] % Indendating
+{\footnotesize\sffamily} % Font settings
+{}
+{}
+{}
+
+% Subsection text styling
+\titlecontents{lsubsection}[.5em] % Indentation
+{\normalfont\footnotesize\sffamily} % Font settings
+{}
+{}
+{}
+ 
+%----------------------------------------------------------------------------------------
+%	PAGE HEADERS
+%----------------------------------------------------------------------------------------
+
+\usepackage{fancyhdr} % Required for header and footer configuration
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries\chaptername\ \thechapter.\ #1}{}} % Chapter text font settings
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} % Section text font settings
+\fancyhf{} \fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Font setting for the page number in the header
+\fancyhead[LO]{\rightmark} % Print the nearest section name on the left side of odd pages
+\fancyhead[RE]{\leftmark} % Print the current chapter name on the right side of even pages
+\renewcommand{\headrulewidth}{0.5pt} % Width of the rule under the header
+\addtolength{\headheight}{2.5pt} % Increase the spacing around the header slightly
+\renewcommand{\footrulewidth}{0pt} % Removes the rule in the footer
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}} % Style for when a plain pagestyle is specified
+
+% Removes the header from odd empty pages at the end of chapters
+\makeatletter
+\renewcommand{\cleardoublepage}{
+\clearpage\ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\thispagestyle{empty}
+\newpage
+\fi}
+
+
+
+%----------------------------------------------------------------------------------------
+%	THEOREM STYLES
+%----------------------------------------------------------------------------------------
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm} % For math equations, theorems, symbols, etc
+
+\newcommand{\intoo}[2]{\mathopen{]}#1\,;#2\mathclose{[}}
+\newcommand{\ud}{\mathop{\mathrm{{}d}}\mathopen{}}
+\newcommand{\intff}[2]{\mathopen{[}#1\,;#2\mathclose{]}}
+\newtheorem{notation}{Notation}[chapter]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% dedicated to boxed/framed environements %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{ocrenumbox}% % Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% % Body font
+{}% Indent amount
+{\small\bf\sffamily\color{ThemeColor}}% % Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{ThemeColor}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
+
+\newtheoremstyle{blacknumex}% Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% Body font
+{} % Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily{\tiny\ensuremath{\blacksquare}}\nobreakspace\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+\newtheoremstyle{blacknumbox} % Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% Body font
+{}% Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% dedicated to non-boxed/non-framed environements %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{ocrenum}% % Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% % Body font
+{}% Indent amount
+{\small\bf\sffamily\color{ThemeColor}}% % Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{ThemeColor}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
+\makeatother
+
+% Defines the theorem text style for each type of theorem to one of the three styles above
+\newcounter{dummy} 
+\numberwithin{dummy}{section}
+\theoremstyle{ocrenumbox}
+\newtheorem{theoremeT}[dummy]{Theorem}
+\newtheorem{problem}{Problem}[chapter]
+\newtheorem{exerciseT}{Exercise}[chapter]
+\theoremstyle{blacknumex}
+\newtheorem{exampleT}{Example}[chapter]
+\newtheorem{regT}{{Box}}[chapter]
+\theoremstyle{blacknumbox}
+\newtheorem{vocabulary}{Vocabulary}[chapter]
+\newtheorem{definitionT}{Definition}[section]
+\newtheorem{corollaryT}[dummy]{Corollary}
+\theoremstyle{ocrenum}
+\newtheorem{proposition}[dummy]{Proposition}
+
+%----------------------------------------------------------------------------------------
+%	DEFINITION OF COLORED BOXES
+%----------------------------------------------------------------------------------------
+
+\RequirePackage[framemethod=default]{mdframed} % Required for creating the theorem, definition, exercise and corollary boxes
+
+% Theorem box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+backgroundcolor=black!5,
+linecolor=ThemeColor,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+innerbottommargin=5pt]{tBox}
+
+% Exercise box	  
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+backgroundcolor=ThemeColor!10,
+linecolor=ThemeColor,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=25pt,
+innerbottommargin=10pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt]{eBox}	
+
+
+% Exercise box	  
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+backgroundcolor=ThemeColor!10,
+linecolor=ThemeColor,
+innerleftmargin=15pt,
+innerrightmargin=15pt,
+innertopmargin=20pt,
+innerbottommargin=5pt,
+leftmargin=1cm,
+rightmargin=1cm,
+linewidth=3pt]{bBox}
+
+% Abstract box	  
+\newmdenv[skipabove=25pt,
+skipbelow=2pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+%backgroundcolor=ThemeColor!0,
+linecolor=ThemeColor,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+innerbottommargin=5pt,
+leftmargin=-15cm,
+rightmargin=0cm,
+linewidth=2pt]{aBox}
+
+% Definition box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=ThemeColor,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=0pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=0pt]{dBox}	
+
+% Corollary box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=gray,
+backgroundcolor=black!5,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=5pt]{cBox}
+
+% Creates an environment for each type of theorem and assigns it a theorem text style from the "Theorem Styles" section above and a colored box from above
+\newenvironment{theorem}{\begin{tBox}\begin{theoremeT}}{\end{theoremeT}\end{tBox}}
+\newenvironment{exercise}{\begin{eBox}\begin{exerciseT}}{\hfill{\color{ThemeColor}\tiny\ensuremath{\blacksquare}}\end{exerciseT}\end{eBox}}
+
+%\newenvironment{regBox}{\begin{bBox}\begin{regT} \begin{spacing}{1.2} \setlength{\parskip}{0.5em}\small}{\end{spacing}\hfill{\color{ThemeColor}\tiny\ensuremath{\blacksquare}}\end{regT}\end{bBox}}
+
+\newenvironment{regBox}{\begin{bBox}\begin{regT}}{\hfill{\color{ThemeColor}\tiny\ensuremath{\blacksquare}}\end{regT}\end{bBox}}
+
+\newenvironment{definition}{\begin{dBox}\begin{definitionT}}{\end{definitionT}\end{dBox}}	
+\newenvironment{example}{\begin{eBox}\begin{exampleT}\small}{\hfill{\color{ThemeColor}\tiny\ensuremath{\blacksquare}}\end{exampleT}\end{eBox}}
+%\newenvironment{example}{\begin{exampleT}}{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}}		
+\newenvironment{corollary}{\begin{cBox}\begin{corollaryT}}{\end{corollaryT}\end{cBox}}	
+
+%----------------------------------------------------------------------------------------
+%	REMARK ENVIRONMENT
+%----------------------------------------------------------------------------------------
+
+\newenvironment{remark}{\par\vspace{10pt}\footnotesize % Vertical white space above the remark and smaller font size
+\begin{list}{}{
+\leftmargin=0pt % Indentation on the left
+\rightmargin=0pt}\item\ignorespaces % Indentation on the right
+\makebox[-2.5pt]{\begin{tikzpicture}[overlay]
+\node[draw=ThemeColor!60,line width=1pt,circle,fill=ThemeColor!25,font=\sffamily\bfseries,inner sep=2pt,outer sep=0pt] at (-15pt,0pt){\textcolor{ThemeColor}{R}};\end{tikzpicture}} % R in a circle
+\advance\baselineskip -1pt}{\end{list}\vskip5pt} % Tighter line spacing and white space after remark
+
+
+%----------------------------------------------------------------------------------------
+%	SECTION ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\usepackage{changepage}
+
+\newenvironment{clr_abstract}{\par\vspace{10pt}\small}
+
+
+\newenvironment{abstract}{
+    \begin{adjustwidth}{-1ex}{0ex}
+    \par\vspace{15pt}
+    \begin{aBox}
+        \small
+        }
+    {\end{aBox} \end{adjustwidth}}
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	SECTION NUMBERING IN THE MARGIN
+%----------------------------------------------------------------------------------------
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{\llap{\textcolor{ThemeColor}{\csname the#1\endcsname}\hspace{1em}}}                    
+\renewcommand{\section}{\@startsection{section}{1}{\z@}
+{-4ex \@plus -1ex \@minus -.4ex}
+{0.1ex \@plus.2ex }
+{\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+{-3ex \@plus -0.1ex \@minus -.4ex}
+{0.5ex \@plus.2ex }
+{\normalfont\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
+{-2ex \@plus -0.1ex \@minus -.2ex}
+{.2ex \@plus.2ex }
+{\normalfont\small\sffamily\bfseries}}                        
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+{-2ex \@plus-.2ex \@minus .2ex}
+{.1ex}
+{\normalfont\small\sffamily\bfseries}}
+
+%----------------------------------------------------------------------------------------
+%	HYPERLINKS IN THE DOCUMENTS
+%----------------------------------------------------------------------------------------
+
+% For an unclear reason, the package should be loaded now and not later
+\usepackage{hyperref}
+\hypersetup{hidelinks,colorlinks=false,breaklinks=true,urlcolor= ThemeColor,bookmarksopen=false,pdftitle={Title},pdfauthor={Author}}
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER HEADINGS
+%----------------------------------------------------------------------------------------
+
+% The set-up below should be (sadly) manually adapted to the overall margin page septup controlled by the geometry package loaded in the main.tex document. It is possible to implement below the dimensions used in the goemetry package (top,bottom,left,right)... TO BE DONE
+
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}
+
+% Numbered chapters with mini tableofcontents
+\def\thechapter{\arabic{chapter}}
+\def\@makechapterhead#1{
+\thispagestyle{empty}
+{\centering \normalfont\sffamily
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\startcontents
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{tikzpicture}};
+\end{tikzpicture}}
+\par\vspace*{230\p@}
+\fi
+\fi}
+
+% Unnumbered chapters without mini tableofcontents (could be added though) 
+\def\@makeschapterhead#1{
+\thispagestyle{empty}
+{\centering \normalfont\sffamily
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\begin{tikzpicture}[remember picture,overlay]
+\node at (current page.north west)
+{\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north west,inner sep=0pt] at (0,0) {\includegraphics[width=\paperwidth]{\thechapterimage}};
+%\draw[anchor=west] (5cm,-9cm) node [rounded corners=20pt,fill=ThemeColor!10!white,fill opacity=.6,inner sep=12pt,text opacity=1,draw=ThemeColor,draw opacity=1,line width=1.5pt]{\huge\sffamily\bfseries\textcolor{black}{#1\strut\makebox[22cm]{}}};
+\end{tikzpicture}};
+\end{tikzpicture}}
+\par\vspace*{180\p@}
+\fi
+\fi
+}
+\makeatother
+
+% This changes the chapter numbering to ABC for the appendices
+
+\renewcommand{\thepart}{\arabic{part}}%part numbering in arabic
+
+\appto\appendix{%
+\renewcommand{\thepart}{\Alph{part}}% A,B,C
+\renewcommand{\theHpart}{\Alph{part}}% for hyperref
+\renewcommand\chaptername{Appendix} % Changes the header to say "Appendix"
+\renewcommand\thesection{\Alph{chapter}} % Resets the sections so it says A instead of A.1.
+\setcounter{part}{0}} %to restart with A
+%\setcounter{secnumdepth}{0}
+
+
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER LABELS
+%----------------------------------------------------------------------------------------
+\usepackage{silence}
+\WarningsOff[everypage]
+\usepackage[contents={},opacity=1,scale=1,color=black]{background}
+\usepackage{tikzpagenodes}
+\usepackage{totcount}
+\usetikzlibrary{calc}
+
+\usepackage{xpatch}
+\xpatchcmd{\chapter}{\thispagestyle{plain}}
+                    {\thispagestyle{plain}\stepcounter{counter}}
+                    {}{}
+
+% Separate Counter to keep track of the chapters
+% This is needed for Appendices that use ABC instead of numbers
+% The counter stays numeric and allows for the H-Shift to occur
+% Previously based in the chapter numbers, but A * Labelsize is an error
+\newcounter{counter}
+\regtotcounter{counter}
+
+\newif\ifMaterial
+
+% Here you can change the size of the label by altering the '1cm' to be whatever you want
+\newlength\LabelSize
+\setlength\LabelSize{10mm}
+
+% The color below defines the thumb box. I set it to a gray color since not all pages will
+% be printed in color
+\definecolor{ThumbColor}{RGB}{211,211,211}
+
+\AtBeginDocument{%
+    \regtotcounter{chapter}
+    \setlength\LabelSize{\dimexpr\textheight/\totvalue{chapter}\relax}
+    \ifdim\LabelSize>10mm\relax
+    \global\setlength\LabelSize{10mm}
+\fi
+}
+
+\newcommand\AddLabels{%
+\Materialtrue%
+\AddEverypageHook{%
+\ifMaterial%
+\ifodd\value{page} %
+ \backgroundsetup{
+    angle=90,
+    position={current page.east|-current page text area.north  east},
+    vshift=6mm,
+    hshift=-\thecounter*\LabelSize,
+    contents={%
+    \tikz\node[fill=ThumbColor,anchor=west,text width=\LabelSize, minimum height=6mm, align=center,text depth=8mm, text height=6mm, font=\normalfont\normalsize\sffamily\bfseries] {\thechapter};
+    }%
+ }
+ \else
+ %\backgroundsetup{
+    %angle=90,
+    %position={current page.west|-current page text area.north west},
+    %vshift=-10pt,
+    %hshift=-\thecounter*\LabelSize,
+    %contents={%
+    %\tikz\node[fill=ThumbColor,anchor=west,text width=\LabelSize, minimum height=6mm, align=center,text depth=8mm, text height=6mm, font=\normalfont\large\sffamily\bfseries] {\thechapter};
+  %}%
+ %}
+ \fi
+ \BgMaterial%
+\else\relax\fi}%
+}
+
+\newcommand\RemoveLabels{\Materialfalse}
+
